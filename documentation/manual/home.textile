@@ -14,7 +14,7 @@ h2. Enable the module
 p(note) After installing the module, add the following to your conf/dependencies.yml to enable it (donÕt forget to run play dependencies)
 
 @require:
-	- play -> play-statsd 0.1
+	- play -> statsd 0.1
 @
 
 h2. Configure the module
