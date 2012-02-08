@@ -1,34 +1,41 @@
-h1. {module name}
+h1. play-statsd - StatsD plugin for the Play Framework
 
-H3. StatsD
-p(note). A network daemon for aggregating statistics (counters and timers), rolling them up, then sending them to "graphite":http://graphite.wikidot.com/ for graphing.  This module provides an embedded client which will send counter and timer statistics to StatsD via UDP.  For more information on StatsD view the "great post from Etsy":http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/ on what it is and how its used.
+h3. StatsD
 
-p(note). This plugin requres a pre-configured StatsD server to send events to.  Since it uses UDP, the application will continue to function normally in the event of a StatsD server outage, all statistics sent during this time will be lost.  UDP is unreliable so you should be aware that in the event of network congestion, some packets can be lost.
+A network daemon for aggregating statistics (counters and timers), rolling them up, then sending them to "graphite":http://graphite.wikidot.com/ for graphing.  This module provides an embedded client which will send counter and timer statistics to StatsD via UDP.  For more information on StatsD view the "great post from Etsy":http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/ on what it is and how its used.
+
+This plugin requres a pre-configured StatsD server to send events to.  Since it uses UDP, the application will continue to function normally in the event of a StatsD server outage, all statistics sent during this time will be lost.  UDP is unreliable so you should be aware that in the event of network congestion, some packets can be lost.
 
 
 h2. Installation
-p(note). View the StatsD installation instructions on "github":https://github.com/etsy/statsd
-p(note). To install this module: @play install statsd@
+
+View the StatsD installation instructions on "github":https://github.com/etsy/statsd
+
+To install this module: @play install statsd@
 
 h2. Enable the module
-p(note) After installing the module, add the following to your conf/dependencies.yml to enable it (don’t forget to run play dependencies)
 
-@require:
-	- play -> play-statsd 0.1
-@
+After installing the module, add the following to your conf/dependencies.yml to enable it (don’t forget to run play dependencies)
+
+<code>
+require:
+- play -> play-statsd 0.1
+</code>
 
 h2. Configure the module
 
-p(note) You need to configure the host and port that your StatsD/Graphite server is running on.
+You need to configure the host and port that your StatsD/Graphite server is running on.
 
 h3. Host
-p(note) @statsd.host@ - specify the host of the statsd server.  Defaults to localhost.
+
+@statsd.host@ - specify the host of the statsd server.  Defaults to localhost.
 
 h3. Port
-p(note). @statsd.port@ - specify the port of the statsd server.  Defaults to 8125.
+
+@statsd.port@ - specify the port of the statsd server.  Defaults to 8125.
 
 h2. Usage
 
-p(note). Statsd provides methods to emit statistics via increment, decrement, and timer methods.  Each method takes a value which represents the "bucket" in Graphite that the statistic should reside in.  As an example, suppose you have an application which supports user login, and you would like to track how often users log in, and how many times users fail to log in successfully.
+Statsd provides methods to emit statistics via increment, decrement, and timer methods.  Each method takes a value which represents the "bucket" in Graphite that the statistic should reside in.  As an example, suppose you have an application which supports user login, and you would like to track how often users log in, and how many times users fail to log in successfully.
 
-p(note). By adding @Statsd.increment("my_application.user_logins");@ to the controler method upon successful user login, StatsD would increment the "my_application.user_login" bucket by one.  In a similar fashion you would add @Statsd.increment("my_application.user_login_failures");@ to increase the failed counts.
+By adding @Statsd.increment("my_application.user_logins");@ to the controler method upon successful user login, StatsD would increment the "my_application.user_login" bucket by one.  In a similar fashion you would add @Statsd.increment("my_application.user_login_failures");@ to increase the failed counts.
