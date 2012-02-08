@@ -19,6 +19,7 @@ After installing the module, add the following to your conf/dependencies.yml to 
 
 <code>
 require:
+
 	- play -> play-statsd 0.1
 </code>
 
